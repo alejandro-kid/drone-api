@@ -42,3 +42,29 @@ delete_drone_schema = {
     },
     "requiered": ["serial_number"]
 }
+
+add_medicine_schema = {
+    "type": "object",
+    "properties": {
+        "serial_number": {
+            "type": "string",
+            "maximum": 100,
+            "pattern": "^[a-zA-Z0-9]*$"
+        },
+        "medicine": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {"type": "string"},
+                    "weight": {"type": "number", "pattern": "^[a-zA-Z0-9_-]*$"},
+                    "code": {"type": "string", "pattern": "^[A-Z0-9_]+$"},
+                    "image": {"type": "string", "contentEncoding": "base64"}
+                },
+                "requiered": ["name", "weight", "code", "image"]
+            },
+        "battery": {"type": "number"}
+        },
+    "requiered": ["serial_number", "medicine"]
+    }
+}
