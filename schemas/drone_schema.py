@@ -4,7 +4,7 @@ register_drone_schema = {
         "serial_number": {
             "type": "string",
             "maximum": 100,
-            "pattern": "^[a-zA-Z0-9_-]*$"
+            "pattern": "^[a-zA-Z0-9]*$"
         },
         "model": {
             "type": "string",
@@ -29,4 +29,16 @@ update_drone_schema = {
         {"required": ["battery"]},
         {"required": ["status"]}
     ]
+}
+
+delete_drone_schema = {
+    "type": "object",
+    "properties": {
+        "serial_number": {
+            "type": "string",
+            "maximum": 100,
+            "pattern": "^[a-zA-Z0-9]*$"
+        },
+    },
+    "requiered": ["serial_number"]
 }
