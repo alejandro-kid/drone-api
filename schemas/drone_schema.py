@@ -15,3 +15,18 @@ register_drone_schema = {
     "requiered": ["serial_number", "model"]
 }
 
+update_drone_schema = {
+    "type": "object",
+    "properties": {
+        "battery": {"type": "integer", "minimum": 0, "maximum": 100},
+        "status": {
+            "type": "string",
+            "enum": ["IDLE", "LOADING", "LOADED", "DELIVERING", \
+                "DELIVERED", "RETURNING"]
+        }
+    },
+    "oneOf": [
+        {"required": ["battery"]},
+        {"required": ["status"]}
+    ]
+}
