@@ -36,9 +36,9 @@ jobs:
       with:
         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
         tags: |
-          type=sha,prefix=,enable={{is_default_branch}}
+          type=sha,prefix=,enable={{is_default_branch}},format=short
           type=raw,value=latest,enable={{is_default_branch}}
-          type=sha,prefix={{branch}}-,enable=${{ github.ref == format('refs/heads/{0}', 'develop') }}
+          type=sha,prefix={{branch}}-,format=short,enable=${{ github.ref == format('refs/heads/{0}', 'develop') }}
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v4
