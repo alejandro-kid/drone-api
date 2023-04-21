@@ -5,6 +5,6 @@ gunicorn
 jsonschema
 pipenv-to-requirements
 psycopg2-binary
-pytest
+pytest >= 7.3.1
 sqlalchemy
 swagger-ui-bundle
