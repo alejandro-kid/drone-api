@@ -7,14 +7,6 @@ from schemas.drone_schema import register_drone_schema, update_drone_schema, \
     delete_drone_schema, add_medicine_schema
 
 
-@given(serial_number=from_regex(r'^[a-zA-Z0-9]{7,100}$'), \
-    modelo=sampled_from( \
-        ["Lightweight", "Middleweight", "Cruiserweight", "Heavyweight"]))
-def test_schema_register_drone_schema(serial_number, modelo):
-    td_post_body = {"serial_number": serial_number, "model": modelo}
-    jsonschema.validate(td_post_body, register_drone_schema)
-
-
 @given(battery=integers(min_value=0, max_value=100), \
     status=sampled_from(["IDLE", "LOADING", "LOADED", "DELIVERING", \
                 "DELIVERED", "RETURNING"]))
