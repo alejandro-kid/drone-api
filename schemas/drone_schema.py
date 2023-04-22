@@ -25,10 +25,21 @@ update_drone_schema = {
                 "DELIVERED", "RETURNING"]
         }
     },
-    "oneOf": [
-        {"required": ["battery"]},
-        {"required": ["status"]}
-    ]
+    "anyOf": [
+        {
+            "oneOf": [
+                {
+                    "required": ["battery"]
+                },
+                {
+                    "required": ["status"]
+                }
+            ]
+        },
+        {
+            "required": ["battery", "status"]
+        }
+    ],
 }
 
 delete_drone_schema = {
