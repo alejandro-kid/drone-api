@@ -67,9 +67,10 @@ add_medicine_schema = {
             "items": {
                 "type": "object",
                 "properties": {
-                    "name": {"type": "string"},
-                    "weight": {"type": "number", "pattern": "^[a-zA-Z0-9_-]*$"},
-                    "code": {"type": "string", "pattern": "^[A-Z0-9_]+$"},
+                    "name": {"type": "string", "pattern": \
+                        "^[a-zA-Z0-9]{1}[a-zA-Z0-9_-]{4,}$"},
+                    "weight": {"type": "number", "minimum": 1.0, "maximum": 500.0},
+                    "code": {"type": "string", "pattern": "^[A-Z0-9][A-Z0-9_]{4,}$"},
                     "image": {"type": "string", "contentEncoding": "base64"}
                 },
                 "requiered": ["name", "weight", "code", "image"]
