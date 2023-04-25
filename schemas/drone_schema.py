@@ -74,9 +74,8 @@ add_medicine_schema = {
                     "image": {"type": "string", "contentEncoding": "base64"}
                 },
                 "requiered": ["name", "weight", "code", "image"]
-            },
-        "battery": {"type": "number"}
-        },
+            }
+        }
+    },
     "requiered": ["serial_number", "medicine"]
-    }
 }

@@ -13,8 +13,5 @@ from schemas.drone_schema import add_medicine_schema
 def test_schema_add_medicine_schema(serial_number, name, weight, code, image):
     td_post_body = {"serial_number": serial_number, "medicine": [{"name": name, \
         "weigth": weight, "code": code, \
-        "image": base64.b64encode(image.encode())}]}
-    print(type({"name": name, \
-        "weigth": weight, "code": code, \
-        "image": base64.b64encode(image.encode())}))
+        "image": str(base64.b64encode(image.encode()))}]}
     jsonschema.validate(td_post_body, add_medicine_schema)
