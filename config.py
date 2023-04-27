@@ -1,14 +1,11 @@
 import connexion
+import os
 
-from DBConfig import DBConfig
-
-# create an application instance
 
 drone_api = connexion.App(__name__, specification_dir='./swagger')
 
-db_configuration = DBConfig()
-
-drone_api.app.config['SQLALCHEMY_DATABASE_URI'] = db_configuration.get_uri()
+drone_api.app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
+                            os.path.join(drone_api.root_path, 'database/drone_db.db')
 
 drone_api.app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
