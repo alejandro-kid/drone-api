@@ -1,7 +1,5 @@
 from flask import Response
 from db_config import db
-from models.drone_model import Drone
-from models.medicine_model import Medication
 
 
 def welcome():

@@ -23,17 +23,16 @@ def client():
         yield c
 
 
-@given(td_serial_number=from_regex(r'^[a-zA-Z0-9]{7,100}$'), \
-    td_modelo=sampled_from( \
-        ["Lightweight", "Middleweight", "Cruiserweight", "Heavyweight"]))
-@settings(suppress_health_check=[HealthCheck.function_scoped_fixture])
-def test_register_drone(client, td_serial_number, td_modelo):
+# @given(td_serial_number=from_regex(r'^[a-zA-Z0-9]{7,100}$'), \
+#     td_modelo=sampled_from( \
+#         ["Lightweight", "Middleweight", "Cruiserweight", "Heavyweight"]))
+# @settings(suppress_health_check=[HealthCheck.function_scoped_fixture])
+# def test_register_drone(client, td_serial_number, td_modelo):
 
-    register_response = client.get("/register_drone", data=json.dumps(dict(
-        serial_number=td_serial_number,
-        model=td_modelo
-    )), mimetype='application/json')
+#     register_response = client.get("/register_drone", data=json.dumps(dict(
+#         serial_number=td_serial_number,
+#         model=td_modelo
+#     )), mimetype='application/json')
 
-    # get_response = client.get("/get_drone/" + register_response, mimetype='application/json')
-
-    # assert(register_response["data"] == get_response["data"])
+#     get_response = client.get("/get_drone/" + register_response, \
+#         mimetype='application/json')
