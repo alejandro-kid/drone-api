@@ -22,3 +22,6 @@ docker run -p 80:8000 drone-api
 
 ## Pay special attention
 
+## Github Actions
+
+The project has a github action to, test code,  build and publish the container in the package repository of project in [Drone-APi](https://github.com/alejandro-kid/drone-api/pkgs/container/drone-api)
