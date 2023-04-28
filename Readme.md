@@ -22,6 +22,10 @@ docker run -p 80:8000 drone-api
 
 ## Pay special attention
 
+### Init DB
+
+The first thing you need to do is in to de endpoint: /create_db. This endpoint create the Schema Model of DB. After that you can activate any endpoint of the API.
+
 ### Swagger OAS 3.0
 
 The Api was creted using that bring us an UI to test the api, you can access to it putting in the end of the url the endpoint `/ui`

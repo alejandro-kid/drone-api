@@ -177,6 +177,63 @@ paths:
                   message:
                     type: string
                     example: Unexpected error
+  /create_db:
+    get:
+      operationId: api.main.create_db
+      summary: Creates the database.
+      description: Creates the database
+      responses:
+        '200':    # status code
+          description: A JSON with database created
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Database created
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Not found
+        '406':
+          description: Not acceptable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Not acceptable
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Too many requests
+        'default':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unexpected error
+
   /register_drone:
     post:
       operationId: api.drone.register_drone
