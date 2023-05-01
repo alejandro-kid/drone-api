@@ -36,7 +36,7 @@ The API was created using Connection, a framework that uses Swagger OAS3.0 to co
 
 ### Github Actions
 
-The project has a GitHub action to, test code,  build and publish the container in the package repository of the project in [Drone-APi](https://github.com/alejandro-kid/drone-api/pkgs/container/drone-api)
+The project has a GitHub action to, test code,  build and publish the container in the package repository of the project in [Drone-APi](https://github.com/alejandro-kid/drone-api/pkgs/container/drone-api). When the code is push to de repository a trigger is activated to build and publish the container, a container with automatic tags that use as identification the ```<branch-name>-<commit-hash>``` in case of master branch only the commit hash (only the first seven numbers).
 
 ### Test
 

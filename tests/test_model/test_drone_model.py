@@ -105,7 +105,8 @@ def test_add_two_medications(db_session):
         assert stored_and_not_stored["stored"][1].status == "LOADED"
 
         assert stored_and_not_stored["not_stored"][0]["name"] == medicaments[1]["name"]
-        assert stored_and_not_stored["not_stored"][0]["weight"] == medicaments[1]["weight"]
+        assert stored_and_not_stored["not_stored"][0]["weight"] == \
+                                                        medicaments[1]["weight"]
         assert stored_and_not_stored["not_stored"][0]["code"] == medicaments[1]["code"]
 
 def test_add_cero_medications(db_session):
@@ -121,6 +122,7 @@ def test_add_cero_medications(db_session):
         assert len(stored_and_not_stored["not_stored"]) == 1
 
         assert stored_and_not_stored["not_stored"][0]["name"] == medicaments[3]["name"]
-        assert stored_and_not_stored["not_stored"][0]["weight"] == medicaments[3]["weight"]
+        assert stored_and_not_stored["not_stored"][0]["weight"] == \
+                                                        medicaments[3]["weight"]
         assert stored_and_not_stored["not_stored"][0]["code"] == medicaments[3]["code"]
 
