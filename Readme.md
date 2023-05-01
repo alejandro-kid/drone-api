@@ -50,3 +50,7 @@ In Medicine class, the image attribute is not necessary to store, here we use th
 > Note: the author knows that we can use the same name of a medicine but with a different code and the same image for the same medicine, but this context is not necessary for this exercise (I think).
 
 Validation is in data of both classes, the author implements many validations schema for different purpose, and validate the constraints with Regular expressions.
+
+### 3rd Party Libraries
+
+To keep a code style with global metric the author use flake8 and ruff to lint the code even in the test code.

@@ -35,4 +35,4 @@ def test_register_drone(client, td_serial_number, td_modelo):
         model=td_modelo
     )), mimetype='application/json')
 
-    # assert register_response.status_code == 201
+    assert register_response.status_code == 405
