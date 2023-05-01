@@ -27,6 +27,7 @@ components:
       required:
         - serial_number
         - model
+
     DroneResponse:
       type: object
       properties:
@@ -63,6 +64,91 @@ components:
               - DELIVERING
               - DELIVERED
               - RETURNING
+
+    DroneMedications:
+      type: object
+      properties:
+        drone_id:
+          type: integer
+        medications:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                maxLength: 100
+                pattern: "^[a-zA-Z0-9]{1}[a-zA-Z0-9_-]{4,}$"
+              weight:
+                type: number
+                minimum: 0
+                maximum: 500.0
+              code:
+                type: string
+                maxLength: 100
+                pattern: "^[A-Z0-9][A-Z0-9_]{4,}$"
+              image:
+                type: string
+                format: byte
+            required:
+              - name
+              - weight
+              - code
+              - image
+      required:
+        - drone_id
+        - medications
+
+    DroneMedicationsResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        data:
+          type: object
+          properties:
+            serial_number:
+              type: string
+            model:
+              type: string
+              enum:
+                - Lightweight
+                - Middleweight
+                - Cruiserweight
+                - Heavyweight
+            battery_capacity:
+              type: integer
+              minimum: 0
+              maximum: 100
+            status:
+              type: string
+              enum:
+              - IDLE
+              - LOADING
+              - LOADED
+              - DELIVERING
+              - DELIVERED
+              - RETURNING
+            medications:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    maxLength: 100
+                    pattern: "^[a-zA-Z0-9]{1}[a-zA-Z0-9_-]{4,}$"
+                  weight:
+                    type: number
+                    minimum: 0
+                    maximum: 500.0
+                  code:
+                    type: string
+                    maxLength: 100
+                    pattern: "^[A-Z0-9][A-Z0-9_]{4,}$"
+                  image:
+                    type: string
+                    format: byte
 
 paths:
   /:
@@ -253,7 +339,6 @@ paths:
              schema:
               $ref: '#/components/schemas/DroneResponse'
 
-
   /drone/{id}:
     get:
       operationId: api.drone.get_drone
@@ -268,6 +353,65 @@ paths:
       responses:
         '200':
           description: Drone found
+          content:
+            application/json:
+             schema:
+              $ref: '#/components/schemas/DroneResponse'
+        '404':
+          description: Drone not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Drone not found
+        '406':
+          description: Not acceptable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Not acceptable
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Too many requests
+        'default':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unexpected error
+
+  /load_drone:
+    post:
+      operationId: api.drone.load_drone
+      summary: Load a drone with medications.
+      description: Load a drone with medications.
+      requestBody:
+        required: true
+        content:
+          application/json:
+             schema:
+              $ref: '#/components/schemas/DroneMedications'
+      responses:
+        '200':
+          description: Drone loaded
           content:
             application/json:
              schema:
