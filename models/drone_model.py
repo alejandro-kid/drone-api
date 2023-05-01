@@ -36,11 +36,8 @@ class Drone(db.Model):
             case _:
                 self.weight_limit = 0
 
-    @staticmethod
-    def register_drone(serial_number, model, battery_capacity=100, \
-             state='IDLE'):
-        new_drone = Drone(serial_number, model, battery_capacity)
-        db.session.add(new_drone)
+    def register_drone(self):
+        db.session.add(self)
         db.session.commit()
 
 
