@@ -12,7 +12,7 @@ components:
         serial_number:
           type: string
           maxLength: 100
-          pattern: "^[a-zA-Z0-9]*$"
+          pattern: "^[a-zA-Z0-9]{7,100}$"
         model:
           type: string
           enum:
@@ -338,6 +338,26 @@ paths:
             application/json:
              schema:
               $ref: '#/components/schemas/DroneResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Bad request
+        '405':
+          description: Method not allowed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Method not allowed
 
   /drone/{id}:
     get:

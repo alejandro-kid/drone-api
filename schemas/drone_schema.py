@@ -4,7 +4,7 @@ register_drone_schema = {
         "serial_number": {
             "type": "string",
             "maximum": 100,
-            "pattern": "^[a-zA-Z0-9]*$"
+            "pattern": "^[a-zA-Z0-9]{7,100}$"
         },
         "model": {
             "type": "string",
