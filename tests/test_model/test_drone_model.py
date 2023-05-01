@@ -10,7 +10,6 @@ from sqlalchemy.orm import sessionmaker
 
 
 drone_test_api = connexion.FlaskApp(__name__)
-# setting in memory database for testing
 SQLALCHEMY_DATABASE_URI = 'sqlite:///' + \
     os.path.join(drone_api.root_path, 'database/test.db')
 drone_test_api.app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
