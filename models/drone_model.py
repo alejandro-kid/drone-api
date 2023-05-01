@@ -1,4 +1,7 @@
+import base64
 import json
+
+from config import drone_api
 from db_config import db
 from models.medicine_model import Medication
 
@@ -76,6 +79,7 @@ class Drone(db.Model):
                             'LOADED', self.serial_number)
                         db.session.add(medication)
                         stored_and_not_stored["stored"].append(medication)
+                        self.__save_image(medication["image"], medication["code"])
                         commit = True
                     else:
                         stored_and_not_stored["not_stored"].append(medication)
@@ -92,4 +96,11 @@ class Drone(db.Model):
                 db.session.commit()
 
         return stored_and_not_stored
+
+
+    def __save_image(self, image, name):
+        with open(str(drone_api.root_path) + "/images/" + \
+            name + ".jpeg", 'wb') as f:
+            f.write(base64.b64decode(image))
+            f.close()
 
