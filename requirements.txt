@@ -1,5 +1,5 @@
 connexion
-flask
+flask[async]
 flask-sqlalchemy
 gunicorn
 jsonschema
