@@ -68,8 +68,9 @@ components:
     DroneMedications:
       type: object
       properties:
-        drone_id:
-          type: integer
+        serial_number:
+          type: string
+          pattern: "^[a-zA-Z0-9]{7,100}$"
         medications:
           type: array
           items:
@@ -96,7 +97,7 @@ components:
               - code
               - image
       required:
-        - drone_id
+        - serial_number
         - medications
 
     DroneMedicationsResponse:
@@ -359,64 +360,6 @@ paths:
                     type: string
                     example: Method not allowed
 
-  /drone/{id}:
-    get:
-      operationId: api.drone.get_drone
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-            minimum: 1
-          description: The drone ID
-      responses:
-        '200':
-          description: Drone found
-          content:
-            application/json:
-             schema:
-              $ref: '#/components/schemas/DroneResponse'
-        '404':
-          description: Drone not found
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Drone not found
-        '406':
-          description: Not acceptable
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Not acceptable
-        '429':
-          description: Too many requests
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Too many requests
-        'default':
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Unexpected error
 
   /load_drone:
     post:
