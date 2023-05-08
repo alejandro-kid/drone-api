@@ -2,22 +2,18 @@
 
 Drone API is an exercise to evaluate programmer skills for the position of Software Engineer in MusalaSoft. The API was developed in Python using the framework Flask. The exercise was to check the candidate's abilities and not his proficiency in a specific programming language. For this reason, Python Flask was chosen and not NodeJS as suggested (at the end of the exercise document when it said: "JUnit tests are optional..."), and the test framework Pytest.
 
-## Build
+## Build and deploy
 
-To build the project you need to have installed [docker](https://docs.docker.com/engine/install/) and run the following command:
+To build and deploy you need to be installed on your SO, Docker and Docker-Compose tools. First you need to build the orchetration
 
 ```bash
-docker build -t drone-api .
+docker-compose build .
 ```
 
-or directly download the container from the package repository of the project in [github](https://github.com/alejandro-kid/drone-api/pkgs/container/drone-api)
-
-## Run
-
-To run the project you need to have installed [docker](https://docs.docker.com/engine/install/) and run the following command:
+after that you only need to **up** the entire orchectration with following command:
 
 ```bash
-docker run -p 80:8000 drone-api
+docker-compose -d up
 ```
 
 ## Pay special attention
