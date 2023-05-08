@@ -43,23 +43,17 @@ def register_drone():
     return response
 
 
-def get_drone(id):
-    try:
-        stored_drone = Drone.query.filter_by(id=id).first()
-        response = Response(json.dumps(str(stored_drone)), 201, \
-            mimetype="application/json")
-    except exc.SQLAlchemyError as error:
-        response = Response(str(error), 400, mimetype="application/json")
-    return response
-
 def load_drone():
     request_data = request.get_json()
     try:
         jsonschema.validate(request_data, add_medicine_schema)
-        drone_id = request_data['drone_id']
-        stored_drone = Drone.query.filter_by(id=drone_id).first()
-        stored_drone.add_medication(request_data['medications'])
-        response = Response(json.dumps(str(stored_drone)), 201, \
+        serial_number = request_data['serial_number']
+        stored_drone = Drone.query.filter_by(serial_number=serial_number).first()
+        stored_and_not_stored = stored_drone.add_medication(request_data['medications'])
+        data = {
+            "data": stored_and_not_stored
+        }
+        response = Response(json.dumps(data), 202, \
             mimetype="application/json")
 
     except jsonschema.exceptions.ValidationError as exc:

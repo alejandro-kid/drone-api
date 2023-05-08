@@ -11,11 +11,11 @@ class Drone(db.Model):
 
     serial_number = db.Column(db.String(100), primary_key=True, unique=True, \
         nullable=False)
-    model = db.Column(db.String(20), db.CheckConstraint("model IN ('Lightweight', \
+    model = db.Column(db.String, db.CheckConstraint("model IN ('Lightweight', \
         'Middleweight', 'Cruiserweight', 'Heavyweight')"), nullable=False)
     weight_limit = db.Column(db.Float, nullable=False)
     battery_capacity = db.Column(db.Integer, nullable=False)
-    state = db.Column(db.String(20), db.CheckConstraint("state IN ('IDLE', 'LOADING', \
+    state = db.Column(db.String, db.CheckConstraint("state IN ('IDLE', 'LOADING', \
         'LOADED', 'DELIVERING', 'DELIVERED', 'RETURNING')"), nullable=False)
     
     medication = db.relationship('Medication', backref='drone', lazy=True)
@@ -74,10 +74,10 @@ class Drone(db.Model):
                 for medication in medications:
                     if weight_space >= medication["weight"]:
                         weight_space -= medication["weight"]
-                        medication = Medication(medication["name"],
+                        medication_object = Medication(medication["name"],
                             medication["weight"], medication["code"],
                             'LOADED', self.serial_number)
-                        db.session.add(medication)
+                        db.session.add(medication_object)
                         stored_and_not_stored["stored"].append(medication)
                         self.__save_image(medication["image"], medication["code"])
                         commit = True
@@ -100,7 +100,7 @@ class Drone(db.Model):
 
     def __save_image(self, image, name):
         with open(str(drone_api.root_path) + "/images/" + \
-            name + ".jpeg", 'wb') as f:
+            name + ".jpg", 'wb') as f:
             f.write(base64.b64decode(image))
             f.close()
 

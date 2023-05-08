@@ -9,8 +9,8 @@ class Medication(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     weight = db.Column(db.Float, nullable=False)
-    code = db.Column(db.String(20), unique=True, nullable=False)
-    status = db.Column(db.String(20), db.CheckConstraint("status IN ('LOADED', \
+    code = db.Column(db.String, unique=True, nullable=False)
+    status = db.Column(db.String, db.CheckConstraint("status IN ('LOADED', \
         'DELIVERING', 'DELIVERED')"), nullable=False)
     drone_id = db.Column(db.String(100), db.ForeignKey('drone.serial_number'))
 
