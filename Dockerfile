@@ -1,10 +1,11 @@
-FROM python:3.10.8-alpine
+FROM python:3.10.8-slim
 
 EXPOSE 8000
 
-RUN mkdir /drone_api && \
-    apk upgrade --update
+RUN apt update
+RUN apt upgrade -y
 
+RUN mkdir /drone_api
 COPY . /drone_api
 WORKDIR /drone_api
 
