@@ -1,0 +1,21 @@
+version: '3.9'
+
+volumes:
+  postgres-data: {}
+
+services:
+  postgres-service:
+    image: postgres:alpine
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+  drone-api:
+    build: .
+    ports:
+      - 8000:8000
+    environment:
+      - DB_USER=postgres
+      - DB_PASS=postgres
+      - DB_NAME=postgres
+      - DB_HOST=postgres-service
