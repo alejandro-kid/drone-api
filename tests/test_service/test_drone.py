@@ -1,38 +1,35 @@
-import connexion
 import json
-import os
-import pytest
-
-from config import drone_api
-from db_config import db
-from hypothesis import given, settings, HealthCheck
-from hypothesis.strategies import from_regex, sampled_from
 
 
-drone_test_api = connexion.FlaskApp(__name__)
-SQLALCHEMY_DATABASE_URI = 'sqlite:///' + \
-    os.path.join(drone_api.root_path, 'database/test.db')
-drone_test_api.app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
-drone_test_api.app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db.init_app(drone_test_api.app)
-drone_test_api.add_api('../../swagger/swagger.yml')
+def helper(json_info)->any:
+    for info in json_info:
+        first_row = info.decode("utf-8")
+        return json.loads(first_row)
 
 
-@pytest.fixture(autouse=True)
-def client():
-    with drone_test_api.app.test_client() as c:
-        yield c
+def test_welcome(client):
+    response = client.get("/")
+    assert response.status_code == 200
 
 
-@given(td_serial_number=from_regex(r'^[a-zA-Z0-9]{7,100}$'), \
-    td_modelo=sampled_from( \
-        ["Lightweight", "Middleweight", "Cruiserweight", "Heavyweight"]))
-@settings(suppress_health_check=[HealthCheck.function_scoped_fixture])
-def test_register_drone(client, td_serial_number, td_modelo):
+def test_register_drone(client):
 
-    register_response = client.get("/register_drone", data=json.dumps(dict(
-        serial_number=td_serial_number,
-        model=td_modelo
+    td_serial_number = "1234567"
+    td_model = "Lightweight"
+
+    response = client.post("/register_drone", data=json.dumps(dict(
+        serial_number="1234567",
+        model="Lightweight"
     )), mimetype='application/json')
 
-    assert register_response.status_code == 405
+    json_info = helper(response.response)
+
+    assert response.status_code == 201
+    assert response.content_type == 'application/json'
+    assert json_info["data"]["serial_number"] == td_serial_number
+    assert json_info["data"]["model"] == td_model
+    assert json_info["data"]["weight_limit"] == 200.0
+    assert json_info["data"]["battery"] == 100
+
+
+
