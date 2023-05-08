@@ -1,10 +1,6 @@
 import json
 
-
-def helper(json_info)->any:
-    for info in json_info:
-        first_row = info.decode("utf-8")
-        return json.loads(first_row)
+from tests.conftest import helper
 
 
 def test_welcome(client):
