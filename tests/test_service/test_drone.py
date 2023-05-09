@@ -13,7 +13,7 @@ def test_register_drone(client):
     td_serial_number = "1234567"
     td_model = "Lightweight"
 
-    response = client.post("/register_drone", data=json.dumps(dict(
+    response = client.post("/drone/register", data=json.dumps(dict(
         serial_number=td_serial_number,
         model=td_model
     )), mimetype='application/json')
@@ -35,7 +35,7 @@ def test_register_existed_drone(client):
     td_serial_number = "HTU8L8SO2Xx3EYmkKAz4iuFBY2gAo"
     td_model = "Cruiserweight"
 
-    response = client.post("/register_drone", data=json.dumps(dict(
+    response = client.post("/drone/register", data=json.dumps(dict(
         serial_number=td_serial_number,
         model=td_model
     )), mimetype='application/json')
@@ -46,4 +46,3 @@ def test_register_existed_drone(client):
     assert response.content_type == 'application/json'
     assert json_info["sucess"] is False
     assert json_info["message"] == "Drone already registered"
-

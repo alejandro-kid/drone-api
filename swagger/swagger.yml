@@ -324,7 +324,7 @@ paths:
                     type: string
                     example: Unexpected error
 
-  /register_drone:
+  /drone/register:
     post:
       operationId: api.drone.register_drone
       summary: Register a drone.
