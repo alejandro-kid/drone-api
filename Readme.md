@@ -26,6 +26,10 @@ All needed endpoints and exercise endpoints are not in the code.
 
 The first thing you need to do is activate the endpoint: /create_db. This endpoint creates the Schema Model of DB. After that, you can activate any endpoint of the API.
 
+### About git and commits
+
+The author is the kind of programmer that do all merge branch using rebase to have a linear history. The author considers it an elegant way to do commits.
+
 ### Swagger OAS 3.0
 
 The API was created using Connection, a framework that uses Swagger OAS3.0 to configure and develop APIs, bring us a UI to test the API, you can access it by putting at the end of the URL the endpoint `/ui`
