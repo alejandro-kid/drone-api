@@ -20,11 +20,17 @@ def test_add_a_medication(client):
 
     assert response.status_code == 202
 
-    assert len(json_info["data"]["stored"]) == 1
-    assert len(json_info["data"]["not_stored"]) == 0
-    assert json_info["data"]["stored"][0]["name"] == medicaments[0]["name"]
-    assert json_info["data"]["stored"][0]["weight"] == medicaments[0]["weight"]
-    assert json_info["data"]["stored"][0]["code"] == medicaments[0]["code"]
+    assert len(json_info["data"]["medication"]["stored"]) == 1
+    assert len(json_info["data"]["medication"]["not_stored"]) == 0
+    assert json_info["data"]["medication"]["stored"][0]["name"] == \
+        medicaments[0]["name"]
+    assert json_info["data"]["medication"]["stored"][0]["weight"] == \
+        medicaments[0]["weight"]
+    assert json_info["data"]["medication"]["stored"][0]["code"] == \
+        medicaments[0]["code"]
+
+    assert json_info["data"]["drone"]["serial_number"] == td_drone_serial_number
+    assert json_info["data"]["drone"]["state"] == "LOADING"
 
 
 def test_add_two_medications(client):
@@ -41,21 +47,32 @@ def test_add_two_medications(client):
     json_info = helper(response.response)
 
     assert response.status_code == 202
-    assert len(json_info["data"]["stored"]) == 2
-    assert len(json_info["data"]["not_stored"]) == 1
+    assert len(json_info["data"]["medication"]["stored"]) == 2
+    assert len(json_info["data"]["medication"]["not_stored"]) == 1
 
-    assert json_info["data"]["stored"][0]["name"] == medicaments[0]["name"]
-    assert json_info["data"]["stored"][0]["weight"] == medicaments[0]["weight"]
-    assert json_info["data"]["stored"][0]["code"] == medicaments[0]["code"]
+    assert json_info["data"]["medication"]["stored"][0]["name"] == \
+        medicaments[0]["name"]
+    assert json_info["data"]["medication"]["stored"][0]["weight"] == \
+        medicaments[0]["weight"]
+    assert json_info["data"]["medication"]["stored"][0]["code"] == \
+        medicaments[0]["code"]
 
-    assert json_info["data"]["stored"][1]["name"] == medicaments[2]["name"]
-    assert json_info["data"]["stored"][1]["weight"] == medicaments[2]["weight"]
-    assert json_info["data"]["stored"][1]["code"] == medicaments[2]["code"]
+    assert json_info["data"]["medication"]["stored"][1]["name"] == \
+        medicaments[2]["name"]
+    assert json_info["data"]["medication"]["stored"][1]["weight"] == \
+        medicaments[2]["weight"]
+    assert json_info["data"]["medication"]["stored"][1]["code"] == \
+        medicaments[2]["code"]
 
-    assert json_info["data"]["not_stored"][0]["name"] == medicaments[1]["name"]
-    assert json_info["data"]["not_stored"][0]["weight"] == medicaments[1]["weight"]
-    assert json_info["data"]["not_stored"][0]["code"] == medicaments[1]["code"]
+    assert json_info["data"]["medication"]["not_stored"][0]["name"] == \
+        medicaments[1]["name"]
+    assert json_info["data"]["medication"]["not_stored"][0]["weight"] == \
+        medicaments[1]["weight"]
+    assert json_info["data"]["medication"]["not_stored"][0]["code"] == \
+        medicaments[1]["code"]
 
+    assert json_info["data"]["drone"]["serial_number"] == td_drone_serial_number
+    assert json_info["data"]["drone"]["state"] == "LOADING"
 
 def test_add_cero_medications(client):
 
@@ -70,10 +87,16 @@ def test_add_cero_medications(client):
     json_info = helper(response.response)
 
     assert response.status_code == 202
-    assert len(json_info["data"]["stored"]) == 0
-    assert len(json_info["data"]["not_stored"]) == 1
+    assert len(json_info["data"]["medication"]["stored"]) == 0
+    assert len(json_info["data"]["medication"]["not_stored"]) == 1
 
 
-    assert json_info["data"]["not_stored"][0]["name"] == medicaments[3]["name"]
-    assert json_info["data"]["not_stored"][0]["weight"] == medicaments[3]["weight"]
-    assert json_info["data"]["not_stored"][0]["code"] == medicaments[3]["code"]
+    assert json_info["data"]["medication"]["not_stored"][0]["name"] == \
+        medicaments[3]["name"]
+    assert json_info["data"]["medication"]["not_stored"][0]["weight"] == \
+        medicaments[3]["weight"]
+    assert json_info["data"]["medication"]["not_stored"][0]["code"] == \
+        medicaments[3]["code"]
+
+    assert json_info["data"]["drone"]["serial_number"] == td_drone_serial_number
+    assert json_info["data"]["drone"]["state"] == "IDLE"

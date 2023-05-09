@@ -50,3 +50,11 @@ Validation is in data of both classes, the author implements many validations sc
 ### 3rd Party Libraries
 
 To keep a code style with global metric the author use flake8 and ruff to lint the code even in the test code.
+
+## Endpoints
+
+Below the author will explain the main idea behind some endpoints and design desition around them
+
+### /load_drone
+
+This endpoint receives a drone id and an array of medicines. The endpoint returns a list of medicines carried or not carried in the desired drone. The algorithm in this endpoint tries to fill the drone with all medicines that his max weight support. **The algorithm is not optimal for returning the better choice to fill the drone, because it is not the idea of exercise.** Hence, the algorithm allows or rejects the medicine in appearing order. After that, the algorithm put a tag of _LOADED_ (the main idea here is when the drone arrives at destiny update the tag to _DELIVERED_)for all carried medicines to a posterior search. If the drone is not fully and have free weight, the tag will be _LOADING_, otherwise will be _LOADED__.
