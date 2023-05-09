@@ -51,7 +51,13 @@ def load_drone():
         stored_drone = Drone.query.filter_by(serial_number=serial_number).first()
         stored_and_not_stored = stored_drone.add_medication(request_data['medications'])
         data = {
-            "data": stored_and_not_stored
+            "data": {
+                "medication": stored_and_not_stored,
+                "drone": {
+                    "serial_number": stored_drone.serial_number,
+                    "state": stored_drone.state
+                }
+            }
         }
         response = Response(json.dumps(data), 202, \
             mimetype="application/json")
