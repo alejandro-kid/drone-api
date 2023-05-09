@@ -370,7 +370,7 @@ paths:
                     example: Method not allowed
 
 
-  /load_drone:
+  /drone/load:
     post:
       operationId: api.drone.load_drone
       summary: Load a drone with medications.
