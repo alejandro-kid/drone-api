@@ -72,7 +72,7 @@ def test_add_two_medications(client):
         medicaments[1]["code"]
 
     assert json_info["data"]["drone"]["serial_number"] == td_drone_serial_number
-    assert json_info["data"]["drone"]["state"] == "LOADING"
+    assert json_info["data"]["drone"]["state"] == "LOADED"
 
 def test_add_cero_medications(client):
 
