@@ -85,12 +85,16 @@ class Drone(db.Model):
                         stored_and_not_stored["not_stored"].append(medication)
 
                     if weight_space == 0:
+                        Drone.query.filter_by(serial_number=self.serial_number).\
+                            update({'state': 'LOADED'})
                         break
             else:
                 stored_and_not_stored["not_stored"].extend(medications)
 
+            """ The only drone that you can add medicine is the drones that are """
+            """ IDLE or LOADING state.                                           """
             if commit:
-                if self.state == 'IDLE':
+                if self.state != "LOADED":
                     Drone.query.filter_by(serial_number=self.serial_number).\
                         update({'state': 'LOADING'})
                 db.session.commit()
