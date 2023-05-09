@@ -49,18 +49,31 @@ def load_drone():
         jsonschema.validate(request_data, add_medicine_schema)
         serial_number = request_data['serial_number']
         stored_drone = Drone.query.filter_by(serial_number=serial_number).first()
-        stored_and_not_stored = stored_drone.add_medication(request_data['medications'])
-        data = {
-            "data": {
-                "medication": stored_and_not_stored,
-                "drone": {
-                    "serial_number": stored_drone.serial_number,
-                    "state": stored_drone.state
+        if stored_drone.battery_capacity >= 25:
+            stored_and_not_stored = stored_drone.add_medication(request_data['medications'])
+            data = {
+                "success": True,
+                "data": {
+                    "medication": stored_and_not_stored,
+                    "drone": {
+                        "serial_number": stored_drone.serial_number,
+                        "state": stored_drone.state
+                    }
                 }
             }
-        }
-        response = Response(json.dumps(data), 202, \
-            mimetype="application/json")
+            response = Response(json.dumps(data), 202, \
+                mimetype="application/json")
+        else:
+            data = {
+                "success": False,
+                "message": "Drone under permitted limit to carry medicine",
+                "data": {
+                    "serial_number": stored_drone.serial_number,
+                    "battery": "{}%".format(stored_drone.battery_capacity)
+                }
+            }
+            response = Response(json.dumps(data), 202, \
+                mimetype="application/json")
 
     except jsonschema.exceptions.ValidationError as exc:
         response = Response(str(exc.message), 400, mimetype="application/json")
