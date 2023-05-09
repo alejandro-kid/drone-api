@@ -100,3 +100,25 @@ def test_add_cero_medications(client):
 
     assert json_info["data"]["drone"]["serial_number"] == td_drone_serial_number
     assert json_info["data"]["drone"]["state"] == "IDLE"
+
+
+def test_add_medications_with_low_battery(client):
+
+    td_drone_serial_number = "Z0S24fHgbvjFpbgTscsX32JfuXcMDBZrOk"
+    td_medicaments = [medicaments[3]]
+
+    response = client.post("/load_drone", data=json.dumps(dict(
+        serial_number=td_drone_serial_number,
+        medications=td_medicaments,
+    )), mimetype='application/json')
+
+    json_info = helper(response.response)
+
+    assert response.status_code == 202
+
+    assert json_info["success"] is False
+    assert json_info["message"] == \
+        "Drone under permitted limit to carry medicine"
+
+    assert json_info["data"]["serial_number"] == td_drone_serial_number
+    assert json_info["data"]["battery"] == "24%"

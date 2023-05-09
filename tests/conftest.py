@@ -158,7 +158,7 @@ def fill_drones():
     drone_1 = Drone("LNVotKpL0QmcHjvwJeTz", "Lightweight")
     drone_2 = Drone("QF8bnGItdpWoVP7NPdS4crPS9LckPbuzidr0FvKuS8y", "Middleweight")
     drone_3 = Drone("HTU8L8SO2Xx3EYmkKAz4iuFBY2gAo", "Cruiserweight")
-    drone_4 = Drone("Z0S24fHgbvjFpbgTscsX32JfuXcMDBZrOk", "Heavyweight")
+    drone_4 = Drone("Z0S24fHgbvjFpbgTscsX32JfuXcMDBZrOk", "Heavyweight", 24)
 
     db.session.add(drone_1)
     db.session.add(drone_2)
