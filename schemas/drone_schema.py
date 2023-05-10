@@ -19,7 +19,7 @@ update_drone_schema = {
     "type": "object",
     "properties": {
         "battery": {"type": "integer", "minimum": 0, "maximum": 100},
-        "status": {
+        "state": {
             "type": "string",
             "enum": ["IDLE", "LOADING", "LOADED", "DELIVERING", \
                 "DELIVERED", "RETURNING"]
@@ -32,12 +32,12 @@ update_drone_schema = {
                     "required": ["battery"]
                 },
                 {
-                    "required": ["status"]
+                    "required": ["state"]
                 }
             ]
         },
         {
-            "required": ["battery", "status"]
+            "required": ["battery", "state"]
         }
     ],
 }
