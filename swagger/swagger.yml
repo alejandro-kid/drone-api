@@ -32,7 +32,7 @@ components:
     DroneResponse:
       type: object
       properties:
-        status:
+        state:
           type: string
         data:
           type: object
@@ -56,7 +56,7 @@ components:
               type: integer
               minimum: 0
               maximum: 100
-            status:
+            state:
               type: string
               enum:
               - IDLE
@@ -113,7 +113,7 @@ components:
                   properties:
                     serial_number:
                       type: string
-                    status:
+                    state:
                       type: string
                       enum:
                       - LOADING
@@ -159,6 +159,61 @@ components:
                             pattern: "^[A-Z0-9][A-Z0-9_]{4,}$"
                           image:
                             type: string
+    DroneGETResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+          properties:
+            drone:
+              type: object
+              properties:
+                serial_number:
+                  type: string
+                model:
+                  type: string
+                  enum:
+                    - Lightweight
+                    - Middleweight
+                    - Cruiserweight
+                    - Heavyweight
+                weight:
+                  type: integer
+                  minimum: 200
+                  maximum: 500
+                battery_capacity:
+                  type: integer
+                  minimum: 0
+                  maximum: 100
+                state:
+                  type: string
+                  enum:
+                  - IDLE
+                  - LOADING
+                  - LOADED
+                  - DELIVERING
+                  - DELIVERED
+                  - RETURNING
+            medications:
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    maxLength: 100
+                    pattern: "^[a-zA-Z0-9]{1}[a-zA-Z0-9_-]{4,}$"
+                  weight:
+                    type: number
+                    minimum: 0
+                    maximum: 500.0
+                  code:
+                    type: string
+                    maxLength: 100
+                    pattern: "^[A-Z0-9][A-Z0-9_]{4,}$"
+                  image:
+                    type: string
 
 paths:
   /:
@@ -398,6 +453,161 @@ paths:
                   message:
                     type: string
                     example: Drone not found
+        '406':
+          description: Not acceptable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Not acceptable
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Too many requests
+        'default':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unexpected error
+
+  /drone/{serial_number}:
+    get:
+      operationId: api.drone.get_drone
+      summary: Get Drone by serial number
+      description: Get full information about Drone, if have medication will be returned too.
+      parameters:
+        - name: serial_number
+          in: path
+          description: Serial number of drone
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Drone found
+          content:
+            application/json:
+             schema:
+              $ref: '#/components/schemas/DroneGETResponse'
+        '404':
+          description: Drone not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Drone not found
+        '406':
+          description: Not acceptable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Not acceptable
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Too many requests
+        'default':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unexpected error
+    put:
+      operationId: api.drone.update_drone
+      summary: Update a drone.
+      description: Update a drone
+      parameters:
+        - name: serial_number
+          in: path
+          description: Serial number of drone
+          required: true
+          schema:
+            type: string
+      requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    state:
+                      type: string
+                      enum:
+                      - IDLE
+                      - LOADING
+                      - LOADED
+                      - DELIVERING
+                      - DELIVERED
+                      - RETURNING
+                    battery:
+                      type: integer
+                  anyOf:
+                    - oneOf:
+                        - required:
+                            - state
+                        - required:
+                            - battery
+                    - required:
+                        - state
+                        - battery
+      responses:
+        '200':
+          description: Drone updated
+          content:
+            application/json:
+             schema:
+              $ref: '#/components/schemas/DroneResponse'
+        '404':
+          description: Drone not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Drone not found
+        '405':
+          description: Method not allowed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Method not allowed
         '406':
           description: Not acceptable
           content:
