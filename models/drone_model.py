@@ -102,9 +102,18 @@ class Drone(db.Model):
         return stored_and_not_stored
 
 
-    def __save_image(self, image, name):
+    def __save_image(self, image, name)->None:
         with open(str(drone_api.root_path) + "/images/" + \
             name + ".jpg", 'wb') as f:
             f.write(base64.b64decode(image))
             f.close()
+
+
+    def update_state(self, state:str)->None:
+        self.state = state
+        db.session.commit()
+
+    def update_battery(self, battery_capacity:int)->None:
+        self.battery_capacity = battery_capacity
+        db.session.commit()
 
