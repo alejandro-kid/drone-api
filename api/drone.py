@@ -126,7 +126,7 @@ def update_drone(serial_number):
         jsonschema.validate(request_data, update_drone_schema)
         stored_drone = Drone.query.filter_by(serial_number=serial_number).first()
         if stored_drone:
-            if request_data['state']:
+            if 'state' in request_data:
                 match request_data['state']:
                     case 'IDLE':
                         if stored_drone.state == 'RETURNING':
@@ -141,7 +141,7 @@ def update_drone(serial_number):
                             success = False
                             message = \
                                 "The only way to change to LOADING"\
-                                "is adding medications"
+                                " is adding medications"
 
                     case 'LOADED':
                             if stored_drone.state == 'LOADING':
@@ -199,13 +199,14 @@ def update_drone(serial_number):
                     "message": message
                 }
                 response = Response(json.dumps(data), 200, mimetype="application/json")
-            if request_data['battery']:
-                stored_drone.update_battery(request_data['battery_capacity'])
+            if 'battery' in request_data:
+                stored_drone.update_battery(request_data['battery'])
                 data = {
                     "success": True,
                     "message": "Drone battery changed successfully"
                 }
                 response = Response(json.dumps(data), 200, mimetype="application/json")
+            print(type(request_data))
         else:
             data = {
                 "success": False,
