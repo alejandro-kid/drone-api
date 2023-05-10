@@ -1,7 +1,8 @@
 import jsonschema
 
 from flask import Response, request, json
-from schemas.drone_schema import register_drone_schema, add_medicine_schema, update_drone_schema
+from schemas.drone_schema import register_drone_schema, add_medicine_schema, \
+    update_drone_schema
 from models.drone_model import Drone
 from models.medicine_model import Medication
 from sqlalchemy import exc
@@ -139,7 +140,8 @@ def update_drone(serial_number):
                     case 'LOADING':
                             success = False
                             message = \
-                                "The only way to change to LOADING is adding medications"
+                                "The only way to change to LOADING"\
+                                "is adding medications"
 
                     case 'LOADED':
                             if stored_drone.state == 'LOADING':
