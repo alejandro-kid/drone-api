@@ -160,10 +160,25 @@ def fill_drones():
     drone_3 = Drone("HTU8L8SO2Xx3EYmkKAz4iuFBY2gAo", "Cruiserweight")
     drone_4 = Drone("Z0S24fHgbvjFpbgTscsX32JfuXcMDBZrOk", "Heavyweight", 24)
 
+    drone_5 = Drone(serial_number="tbGTqKCXYFb", model="Lightweight", state="LOADING")
+    drone_6 = Drone(serial_number="kcPyGHjfrhU3TbOp", model="Middleweight", \
+                    state="LOADED")
+    drone_7 = Drone(serial_number="eLGsWwiJ5Lzn", model="Cruiserweight", \
+                    state="DELIVERING")
+    drone_8 = Drone(serial_number="jEwQeOv3LFqJee", model="Heavyweight", \
+                    state="DELIVERED")
+    drone_9 = Drone(serial_number="mOb3Kd0IX4RJdtTVAAET", model="Heavyweight", \
+                    state="RETURNING")
+
     db.session.add(drone_1)
     db.session.add(drone_2)
     db.session.add(drone_3)
     db.session.add(drone_4)
+    db.session.add(drone_5)
+    db.session.add(drone_6)
+    db.session.add(drone_7)
+    db.session.add(drone_8)
+    db.session.add(drone_9)
     db.session.commit()
 
 @pytest.fixture
