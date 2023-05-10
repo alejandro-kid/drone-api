@@ -30,3 +30,10 @@ class Medication(db.Model):
             'state': self.state
         }
         return json.dumps(location_object)
+
+    @staticmethod
+    def update_all_state(serial_number:str, state:str)->None:
+        db.session.query(Medication).filter(Medication.drone_id == serial_number).\
+            update({Medication.state: state}, synchronize_session=False)
+
+        db.session.commit()
