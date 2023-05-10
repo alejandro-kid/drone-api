@@ -11,7 +11,7 @@ def test_add_a_medication(client):
         medicaments[0]
     ]
 
-    response = client.post("/load_drone", data=json.dumps(dict(
+    response = client.post("/drone/load", data=json.dumps(dict(
         serial_number=td_drone_serial_number,
         medications=td_medicaments,
     )), mimetype='application/json')
@@ -38,7 +38,7 @@ def test_add_two_medications(client):
     td_drone_serial_number = "QF8bnGItdpWoVP7NPdS4crPS9LckPbuzidr0FvKuS8y"
     td_medicaments = medicaments
 
-    response = client.post("/load_drone", data=json.dumps(dict(
+    response = client.post("/drone/load", data=json.dumps(dict(
         serial_number=td_drone_serial_number,
         medications=td_medicaments,
     )), mimetype='application/json')
@@ -79,7 +79,7 @@ def test_add_cero_medications(client):
     td_drone_serial_number = "HTU8L8SO2Xx3EYmkKAz4iuFBY2gAo"
     td_medicaments = [medicaments[3]]
 
-    response = client.post("/load_drone", data=json.dumps(dict(
+    response = client.post("/drone/load", data=json.dumps(dict(
         serial_number=td_drone_serial_number,
         medications=td_medicaments,
     )), mimetype='application/json')
@@ -107,7 +107,7 @@ def test_add_medications_with_low_battery(client):
     td_drone_serial_number = "Z0S24fHgbvjFpbgTscsX32JfuXcMDBZrOk"
     td_medicaments = [medicaments[3]]
 
-    response = client.post("/load_drone", data=json.dumps(dict(
+    response = client.post("/drone/load", data=json.dumps(dict(
         serial_number=td_drone_serial_number,
         medications=td_medicaments,
     )), mimetype='application/json')
