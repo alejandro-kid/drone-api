@@ -1,29 +1,12 @@
-import connexion
 import json
 import os
 import pytest
 
 
-from config import drone_api  # noqa: F401
-from db_config import db
+from src.app import create_app
+from src.extensions import db
+from src.models.drone_model import Drone
 from sqlalchemy import create_engine
-
-from models.drone_model import Drone
-
-
-DB_USER = os.getenv("DB_USER", "postgres")
-DB_PASS = os.getenv("DB_PASS", "postgres")
-DB_NAME_TEST = os.getenv("DB_NAME_TEST", "drone-api-test")
-DB_HOST = os.getenv("DB_HOST", "localhost")
-
-drone_api_test = connexion.FlaskApp(__name__)
-drone_api_test.app.config["SQLALCHEMY_DATABASE_URI"] = (
-    "postgresql+psycopg2://" + f"{DB_PASS}:{DB_USER}@{DB_HOST}/{DB_NAME_TEST}"
-)
-drone_api_test.app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-drone_api_test.app.config["SECRET_KEY"] = "mysecret"
-db.init_app(drone_api_test.app)
-drone_api_test.add_api('../swagger/swagger.yml')
 
 
 def helper(json_info)->any:
@@ -183,15 +166,33 @@ def fill_drones():
 
 @pytest.fixture
 def app():
-    app = drone_api_test.app
-    engine = create_engine(drone_api_test.app.config["SQLALCHEMY_DATABASE_URI"])
+
+    DB_USER = os.getenv("DB_USER", "postgres")
+    DB_PASS = os.getenv("DB_PASS", "postgres")
+    DB_NAME = os.getenv("DB_NAME", "drone-api-test")
+    DB_HOST = os.getenv("DB_HOST", "localhost")
+
+    SQLALCHEMY_DATABASE_URI = (
+        "postgresql://" + f"{DB_PASS}:{DB_USER}@{DB_HOST}/{DB_NAME}"
+    )
+
+    params = {
+        "DEBUG": False,
+        "TESTING": True,
+        "WTF_CSRF_ENABLED": False,
+        "SQLALCHEMY_DATABASE_URI": SQLALCHEMY_DATABASE_URI
+    }
+
+    _app = create_app(settings_override=params)
+
+    engine = create_engine(_app.config["SQLALCHEMY_DATABASE_URI"])
     db.Model.metadata.create_all(engine)
 
     #Data test
-    with app.app_context():
+    with _app.app_context():
         fill_drones()
 
-    yield app
+    yield _app
     db.Model.metadata.drop_all(engine)
 
 @pytest.fixture

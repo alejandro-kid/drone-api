@@ -2,7 +2,7 @@ import jsonschema
 
 from hypothesis import given
 from hypothesis.strategies import from_regex
-from schemas.drone_schema import delete_drone_schema
+from src.schemas.drone_schema import delete_drone_schema
 
 
 @given(serial_number=from_regex(r'^[a-zA-Z0-9]{7,100}$'))

@@ -1,7 +1,7 @@
 import jsonschema
 from hypothesis import given
 from hypothesis.strategies import sampled_from, integers
-from schemas.drone_schema import update_drone_schema
+from src.schemas.drone_schema import update_drone_schema
 
 
 @given(battery=integers(min_value=0, max_value=100), \

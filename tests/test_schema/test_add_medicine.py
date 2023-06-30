@@ -3,7 +3,7 @@ import jsonschema
 
 from hypothesis import given
 from hypothesis.strategies import text, from_regex, floats
-from schemas.drone_schema import add_medicine_schema
+from src.schemas.drone_schema import add_medicine_schema
 
 
 @given(serial_number=from_regex(r'^[a-zA-Z0-9]{7,100}$'), \
