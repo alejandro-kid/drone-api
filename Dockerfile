@@ -5,13 +5,13 @@ EXPOSE 8000
 RUN apt update
 RUN apt upgrade -y
 
-RUN mkdir /drone_api
-COPY . /drone_api
-WORKDIR /drone_api
+RUN mkdir -p /drone-api/public/images
+COPY . /drone-api
+WORKDIR /drone-api
 
+RUN python -m pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 ENTRYPOINT ["gunicorn"]
 
-CMD ["--workers=4", "app:drone_api"]
-
+CMD ["-c", "python:config.gunicorn", "src.app:create_app()"]
