@@ -1,9 +1,8 @@
 connexion
-flask[async]
+flask-bcrypt
 flask-sqlalchemy
 gunicorn
 jsonschema
-pipenv-to-requirements
 psycopg2-binary
 sqlalchemy
 swagger-ui-bundle
