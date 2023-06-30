@@ -54,5 +54,5 @@ jobs:
         run: |
           pytest
         env:
-          DB_NAME_TEST: postgres
+          DB_NAME: postgres
 
