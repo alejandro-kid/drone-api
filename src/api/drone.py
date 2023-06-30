@@ -1,10 +1,10 @@
 import jsonschema
 
 from flask import Response, request, json
-from schemas.drone_schema import register_drone_schema, add_medicine_schema, \
+from src.schemas.drone_schema import register_drone_schema, add_medicine_schema, \
     update_drone_schema
-from models.drone_model import Drone
-from models.medicine_model import Medication
+from src.models.drone_model import Drone
+from src.models.medicine_model import Medication
 from sqlalchemy import exc
 
 

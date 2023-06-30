@@ -218,7 +218,7 @@ components:
 paths:
   /:
     get:
-      operationId: api.main.welcome
+      operationId: src.api.main.welcome
       summary: Returns a welcome message.
       description: Displays welcome message
       responses:
@@ -274,7 +274,7 @@ paths:
                     example: Unexpected error
   /health:
     get:
-      operationId: api.main.health
+      operationId: src.api.main.health
       summary: Returns a health status.
       description: Displays health status
       responses:
@@ -330,7 +330,7 @@ paths:
                     example: Unexpected error
   /create_db:
     get:
-      operationId: api.main.create_db
+      operationId: src.api.main.create_db
       summary: Creates the database.
       description: Creates the database
       responses:
@@ -387,7 +387,7 @@ paths:
 
   /drone/register:
     post:
-      operationId: api.drone.register_drone
+      operationId: src.api.drone.register_drone
       summary: Register a drone.
       description: Register a drone
       requestBody:
@@ -427,7 +427,7 @@ paths:
 
   /drone/load:
     post:
-      operationId: api.drone.load_drone
+      operationId: src.api.drone.load_drone
       summary: Load a drone with medications.
       description: Load a drone with medications.
       requestBody:
@@ -486,7 +486,7 @@ paths:
 
   /drone/{serial_number}:
     get:
-      operationId: api.drone.get_drone
+      operationId: src.api.drone.get_drone
       summary: Get Drone by serial number
       description: Get full information about Drone, if have medication will be returned too.
       parameters:
@@ -544,7 +544,7 @@ paths:
                     type: string
                     example: Unexpected error
     put:
-      operationId: api.drone.update_drone
+      operationId: src.api.drone.update_drone
       summary: Update a drone.
       description: Update a drone
       parameters:

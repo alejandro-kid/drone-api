@@ -1,9 +1,9 @@
 import base64
 import json
 
-from config import drone_api
-from db_config import db
-from models.medicine_model import Medication
+from flask import current_app
+from src.extensions import db
+from src.models.medicine_model import Medication
 
 
 class Drone(db.Model):
@@ -103,11 +103,10 @@ class Drone(db.Model):
 
 
     def __save_image(self, image, name)->None:
-        with open(str(drone_api.root_path) + "/images/" + \
+        with open(str(current_app.root_path) + "/../public/images/" + \
             name + ".jpg", 'wb') as f:
             f.write(base64.b64decode(image))
             f.close()
-
 
     def update_state(self, state:str)->None:
         self.state = state

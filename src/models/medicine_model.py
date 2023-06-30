@@ -1,6 +1,6 @@
 import json
 
-from db_config  import db
+from src.extensions import db
 
 
 class Medication(db.Model):

@@ -1,5 +1,5 @@
 from flask import Response
-from db_config import db
+from src.extensions import db
 
 
 def welcome():
